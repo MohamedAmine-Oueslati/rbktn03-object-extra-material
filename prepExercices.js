@@ -248,6 +248,31 @@ function extend(obj1, obj2) {
 // 1.The function Object.keys returns an array of an object's keys. Experiment with it at the console like this:
 //  Object.keys({a: 1, b: 2});
 //  Using this property, write versions of the above functions using repetition through function invocation (i.e. recursion)
+function extend(obj1, obj2) {
+	var arr = Object.keys(obj2) ;
+    if (arr.length === 0) {
+		return obj1 ;
+	}
+	obj1[arr[0]] = obj2[arr[0]]
+	delete obj2[arr[0]]
+	return extend(obj1, obj2);
+}
+
+	var object = {} ;
+function select(obj, keys) {
+	var arr = Object.keys(obj) ;
+	if (keys.length === 0) {
+		return object ;
+    }
+	for (var i = 0 ; i < keys.length ; i++) {
+		if (arr[i] === keys[0]) {
+			object[keys[0]] = obj[keys[0]] ;
+		}
+	}
+	keys.shift() ;
+	return select(obj, keys)
+}
+
 
 // 2.The function JSON.stringify turns JavaScript data structures (arrays and objects) into strings. Try it out in a console like this:
 //  JSON.stringify({a: 1, b: 2, c: ['dog', 'cat', 'zebra'], d: true});
