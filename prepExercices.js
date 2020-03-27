@@ -131,22 +131,38 @@ function older (array,age) {
 
 
 // 13.The following object has a number of key/value pairs that need to be removed:
-//  var dirtyObject = {
-//        _fht: 192492,
-//        name: 'Yan Fan',
-//        age: 27,
-//        _byz: 939205,
-//        _ttrs: 510852
-//  }
+  var dirtyObject = {
+        _fht: 192492,
+        name: 'Yan Fan',
+        age: 27,
+        _byz: 939205,
+        _ttrs: 510852
+  }
 //  function clean(obj) {
 //  }
 //  clean(dirtyObject); // => {name: 'Yan Fan', age: 27}
 //  The function clean should accept an object as the argument and return a new object that has all of the key/value pairs of its parameter except for those that begin with _.
+function clean(obj) { 
+     object = {} ;
 
+    for (var key in obj) {
+    	if (key.indexOf('_') !== 0) {
+    		object[key] = obj[key]
+    	}
+    }
+    return object
+ } 
 // 14.Write a function removeOddValues that takes an object as an argument and returns an object with all key/value pairs removed for which the value holds an odd number. You'll need to use the `typeof` operator to first check that the values are numbers. Try the below in your console:
 //  typeof 'Hello'
 //  typeof 3
-
+function removeOddValues (obj) {
+	for (var key in obj) {
+    	if (typeof(obj[key]) ==='number' && obj[key] % 2 !== 0) {
+    		delete obj[key];
+    	}
+    }
+    return obj
+}
 // More Practice
 
 // 1.Write a function countWords that, when given a string as an argument, returns an object where keys are the words in the string, and values are the number of occurrences of that word within the string:
@@ -159,26 +175,74 @@ function older (array,age) {
 //        Try 'Hello hello'.split(' ') at a console to see how it works.
 //        Modify countWords to be case insensitive by using the following string method (experiment at a console with it to learn its behavior):
 //        'HElLo'.toLowerCase(); // => ???
-
+function countWords(str) {
+	var obj = {} ;
+	var arr = str.split(' ') ;
+	var j = 0 ; 
+	for (var i = 0 ; i < arr.length ; i++) {
+		var k = 1 ;
+        if ( typeof (arr[i]) !== "undefined") {
+		for (var j = i + 1 ; j <= arr.length ; j++) {
+			if (arr[i] === arr[j]) {
+				k++;
+                delete (arr[j]) ;
+	    	}
+            obj[arr[i]] = k ;
+        }
+    	}
+    }
+	return obj ;
+}
 // 2.Write a function countCharacters that, when given a string as an argument, returns an object containing counts of the occurrences of each character in the string.
 //  function countCharacters(s) {
 //  }
 //  countCharacters('hello');    // => {'h': 1, 'e': 1, 'l': 2, 'o': 1}
 //  HINT: You will want to use the string method split. Try 'hello'.split('') in the console to see how it works.
-
+function countCharacters(str) {
+	var obj = {} ;
+	var arr = str.split('') ;
+	var j = 0 ; 
+	for (var i = 0 ; i < arr.length ; i++) {
+        var k = 1 ;
+        if ( typeof (arr[i]) !== "undefined") {
+		for (var j = i + 1 ; j <= arr.length ; j++) {
+			if (arr[i] === arr[j]) {
+				k++;
+                delete (arr[j]) ;
+	    	}
+            obj[arr[i]] = k ;
+        }
+    	}
+    }
+	return obj ;
+}
 // 3.Write a function select that accepts two arguments: an object and an array. The array should contain names of keys that need to be selected from the object. The function select should return an object with the correct key/value pair.
 //  function select(obj, keys) {
 //  }
 //  select({a: 1, b: 2, c: 3}, ['a']);           // => {a: 1}
 //  select({a: 1, b: 2, c: 3}, ['a', 'c']);      // => {a: 1, c: 3}
 //  select({a: 1, b: 2, c: 3}, ['a', 'c', 'd']); // => {a: 1, c: 3}
-
+function select(obj, keys) {
+	var object = {} ;
+	for (var i = 0 ; i < keys.length ; i++) {
+		if (obj.hasOwnProperty(keys[i])) {
+			object[keys[i]] = obj[keys[i]] ;
+		}
+	}
+    return object ;
+}
 // 4.Write a function extends that accepts two objects as arguments, and extends all of the key/value pairs of the second one to the first one. In other words, your function should combine two objects into one.
 //  function extend(obj1, obj2) {
 //  }
 //  extend({a: 1}, {b: 2});             // => {a: 1, b: 2}
 //  extend({a: 1, c: 3}, {b: 2, c: 4}); // => {a: 1, b: 2, c: 4}
-
+function extend(obj1, obj2) {
+	var arr = Object.entries(obj2) ;
+	for (var i = 0 ; i < arr.length ; i++) {
+		obj1[arr[i][0]] = arr[i][1] ;
+	}
+	return obj1 ;
+}
 // Advanced
 
 // 1.The function Object.keys returns an array of an object's keys. Experiment with it at the console like this:
